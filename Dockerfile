@@ -17,4 +17,4 @@ EXPOSE $PORT
 
 ENTRYPOINT ["npm"]
 
-CMD ["start"]
+CMD ["run", "start:prod"]
