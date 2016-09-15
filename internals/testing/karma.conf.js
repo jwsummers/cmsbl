@@ -5,11 +5,9 @@ const path = require('path');
 module.exports = (config) => {
   config.set({
     frameworks: ['mocha'],
-    reporters: ['coverage', 'mocha'],
-    browsers: process.env.TRAVIS // eslint-disable-line no-nested-ternary
-      ? ['ChromeTravis']
-      : process.env.APPVEYOR
-        ? ['IE'] : ['Chrome'],
+    reporters: ['coverage', 'mocha', 'junit'],
+
+    browsers: ['jsdom'],
 
     autoWatch: false,
     singleRun: true,
@@ -41,13 +39,6 @@ module.exports = (config) => {
       stats: 'errors-only',
     },
 
-    customLaunchers: {
-      ChromeTravis: {
-        base: 'Chrome',
-        flags: ['--no-sandbox'],
-      },
-    },
-
     coverageReporter: {
       dir: path.join(process.cwd(), 'coverage'),
       reporters: [
@@ -55,6 +46,12 @@ module.exports = (config) => {
         { type: 'html', subdir: 'html' },
         { type: 'text-summary' },
       ],
+    },
+
+    junitReporter: {
+      outputDir: path.join(process.cwd(), 'results'),
+      outputFile: 'test-results.xml',
+      useBrowserName: false,
     },
 
   });

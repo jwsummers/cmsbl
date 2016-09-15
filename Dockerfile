@@ -1,20 +1,20 @@
 # https://github.com/mhart/alpine-node
 FROM mhart/alpine-node:6
 
-ENV DIR=/opt/cmsbl PORT=8000 NODE_ENV=production
+ENV DIR=/opt/cmsbl PORT=3000 PATH="./node_modules/.bin:${PATH}"
 
-COPY package.json ${DIR}/
+COPY package.json $DIR/
 
-RUN npm install
+RUN cd $DIR && npm install
 
-COPY . $DIR
+COPY . $DIR/
 
-WORKDIR $DIR
-
-RUN npm run build -- -p
+RUN cd $DIR && npm run build
 
 EXPOSE $PORT
 
-ENTRYPOINT ["npm"]
+VOLUME $DIR
 
-CMD ["run", "start:prod"]
+WORKDIR $DIR
+
+CMD ["npm", "run", "start:prod"]

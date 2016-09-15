@@ -1,0 +1,18 @@
+machine:
+  services:
+    - docker
+
+# Includes caching: https://circleci.com/docs/docker#caching-docker-layers
+dependencies:
+  cache_directories:
+    - "~/docker"
+  override:
+    - if [[ -e ~/docker/image.tar ]]; then docker load -i ~/docker/image.tar; fi
+    - docker build --rm=false -t cmsbl/cmsbl:latest . # --rm=false https://discuss.circleci.com/t/docker-error-removing-intermediate-container/70/2
+    - mkdir -p ~/docker; docker save cmsbl/cmsbl:latest > ~/docker/image.tar
+
+test:
+  override:
+    - mkdir -p $CIRCLE_TEST_REPORTS/junit
+    - docker run -t cmsbl/cmsbl:latest cat ./results/test-results.xml > $CIRCLE_TEST_REPORTS/junit/test-results.xml
+    - docker run -t -e "COVERALLS_SERVICE_NAME=$COVERALLS_SERVICE_NAME" -e "COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN" -e "COVERALLS_SERVICE_JOB_ID=$CIRCLE_BUILD_NUM" cmsbl/cmsbl:latest npm run coveralls
