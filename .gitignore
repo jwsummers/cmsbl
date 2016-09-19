@@ -1,7 +1,8 @@
 # Don't check auto-generated stuff into git
-coverage
 build
+coverage
 node_modules
+results
 stats.json
 
 # Cruft
