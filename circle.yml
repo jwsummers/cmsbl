@@ -13,6 +13,7 @@ dependencies:
 
 test:
   override:
-    - mkdir -p $CIRCLE_TEST_REPORTS/junit
+    - mkdir -p $CIRCLE_TEST_REPORTS/junit/
+    - env > $HOME/.env
     - docker run -t cmsbl/cmsbl:latest cat ./results/test-results.xml > $CIRCLE_TEST_REPORTS/junit/test-results.xml
-    - docker run -t -e "COVERALLS_SERVICE_NAME=$COVERALLS_SERVICE_NAME" -e "COVERALLS_REPO_TOKEN=$COVERALLS_REPO_TOKEN" -e "COVERALLS_SERVICE_JOB_ID=$CIRCLE_BUILD_NUM" cmsbl/cmsbl:latest npm run coveralls
+    - docker run -t --env-file $HOME/.env cmsbl/cmsbl:latest npm run coveralls
