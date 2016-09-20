@@ -3,7 +3,10 @@ FROM mhart/alpine-node:6
 
 MAINTAINER Stephen G. Friend, hello@stephengfriend.com
 
-ENV DIR=/opt/cmsbl PORT=3000 PATH="./node_modules/.bin:${PATH}"
+ARG GIT_COMMIT_SHA
+ENV GIT_COMMIT_SHA=${GIT_COMMIT_SHA:-development} \
+    DIR=/opt/cmsbl PORT=3000 \
+    PATH="./node_modules/.bin:${PATH}"
 
 COPY package.json $DIR/
 

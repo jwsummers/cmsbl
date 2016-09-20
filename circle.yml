@@ -8,7 +8,7 @@ dependencies:
     - "~/docker"
   override:
     - if [[ -e ~/docker/image.tar ]]; then docker load -i ~/docker/image.tar; fi
-    - docker build --rm=false -t cmsbl/cmsbl:latest . # --rm=false https://discuss.circleci.com/t/docker-error-removing-intermediate-container/70/2
+    - docker build --rm=false --build-arg GIT_COMMIT_SHA=$CIRCLE_SHA1 -t cmsbl/cmsbl:latest . # --rm=false https://discuss.circleci.com/t/docker-error-removing-intermediate-container/70/2
     - mkdir -p ~/docker; docker save cmsbl/cmsbl:latest > ~/docker/image.tar
 
 test:
