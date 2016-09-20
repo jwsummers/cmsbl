@@ -68,6 +68,7 @@ module.exports = (options) => ({
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+        GIT_COMMIT_SHA: JSON.stringify(process.env.GIT_COMMIT_SHA),
       },
     }),
   ]),

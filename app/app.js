@@ -21,6 +21,12 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import { useScroll } from 'react-router-scroll';
 import LanguageProvider from 'containers/LanguageProvider';
 import configureStore from './store';
+import Raven from 'raven-js';
+
+Raven.config('https://b89f850f0edc4d829598619dee7c8d89@sentry.io/64272', {
+  release: process.env.GIT_COMMIT_SHA || 'development',
+  environment: process.env.NODE_ENV || 'development',
+}).install();
 
 // Import i18n messages
 import { translationMessages } from './i18n';
