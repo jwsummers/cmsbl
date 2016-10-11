@@ -10,9 +10,10 @@ ENV GIT_COMMIT_SHA=${GIT_COMMIT_SHA:-development} \
 
 COPY package.json $DIR/
 
-RUN apk add --update libpng-dev zlib-dev build-base file nasm autoconf automake bash && \
+RUN apk add --update autoconf automake bash build-base file git libpng-dev nasm zlib-dev && \
   cd $DIR && echo "# REPLACE ME" > README.md && \
-  npm install --no-progress && apk del libpng-dev zlib-dev build-base file nasm autoconf automake bash && \
+  npm install --no-progress && \
+  apk del autoconf automake bash build-base file git libpng-dev nasm zlib-dev && \
   rm -rf /etc/ssl /usr/share/man /tmp/* /var/cache/apk/* /root/.npm \
     /root/.node-gyp /usr/lib/node_modules/npm/man \
     /usr/lib/node_modules/npm/doc /usr/lib/node_modules/npm/html

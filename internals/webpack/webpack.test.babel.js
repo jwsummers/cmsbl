@@ -43,9 +43,7 @@ module.exports = {
     // inside your code for any environment checks; UglifyJS will automatically
     // drop any unreachable code.
     new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-      },
+      ENVIRONMENT: JSON.stringify(process.env.NODE_ENV),
     })],
 
   // Some node_modules pull in Node-specific dependencies.

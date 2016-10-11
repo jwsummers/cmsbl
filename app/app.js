@@ -6,11 +6,11 @@
  */
 import 'babel-polyfill';
 
-/* eslint-disable import/no-unresolved */
+/* eslint-disable import/no-unresolved import/extensions */
 // Load the manifest.json file and the .htaccess file
 import '!file?name=[name].[ext]!./manifest.json';
 import 'file?name=[name].[ext]!./.htaccess';
-/* eslint-enable import/no-unresolved */
+/* eslint-enable import/no-unresolved import/extensions */
 
 // Import all the third party stuff
 import React from 'react';
@@ -24,8 +24,8 @@ import configureStore from './store';
 import Raven from 'raven-js';
 
 Raven.config('https://b89f850f0edc4d829598619dee7c8d89@sentry.io/64272', {
-  release: process.env.GIT_COMMIT_SHA || 'development',
-  environment: process.env.NODE_ENV || 'development',
+  release: GIT_COMMIT_SHA || 'development',
+  environment: ENVIRONMENT || 'development',
 }).install();
 
 // Import i18n messages
