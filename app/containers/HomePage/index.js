@@ -10,16 +10,95 @@
  */
 
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
+import { connect } from 'react-redux';
+import Helmet from 'react-helmet';
 
-export default class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
+import messages from './messages';
+import { createStructuredSelector } from 'reselect';
+
+import {
+  selectError,
+  selectIdToken,
+  selectIsLoggingIn,
+  selectProfile,
+} from 'containers/App/selectors';
+
+import { loginRequest, logout } from '../App/actions';
+
+import { FormattedMessage } from 'react-intl';
+
+export class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   render() {
     return (
-      <h1>
-        <FormattedMessage {...messages.header} />
-      </h1>
+      <div>
+        <Helmet
+          title="Home Page"
+          meta={[
+            { name: 'description', content: 'The Home Page' },
+          ]}
+        />
+        <h1>
+          <FormattedMessage {...messages.header} />
+        </h1>
+        <p>
+          {
+            !this.props.idToken ?
+              <button onClick={this.props.login}>Login</button>
+            :
+              <button onClick={this.props.logout}>Logout</button>
+          }
+        </p>
+        <ol>
+          <li>environment - {`${ENVIRONMENT}`}</li>
+          <li>isLoggingIn - {`${this.props.isLoggingIn}`}</li>
+          <li>idToken - {`${this.props.idToken}`}</li>
+          <li>profile - {`${this.props.profile}`}</li>
+          <li>error - {`${this.props.error}`}</li>
+        </ol>
+      </div>
     );
   }
 }
+
+HomePage.propTypes = {
+  isLoggingIn: React.PropTypes.bool,
+  error: React.PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.object,
+    React.PropTypes.bool,
+  ]),
+  profile: React.PropTypes.oneOfType([
+    React.PropTypes.object,
+    React.PropTypes.bool,
+  ]),
+  login: React.PropTypes.func,
+  logout: React.PropTypes.func,
+  idToken: React.PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.bool,
+  ]),
+};
+
+export function mapDispatchToProps(dispatch) {
+  return {
+    login: (evt) => {
+      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
+      dispatch(loginRequest());
+    },
+    logout: (evt) => {
+      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
+      dispatch(logout());
+    },
+    dispatch,
+  };
+}
+
+const mapStateToProps = createStructuredSelector({
+  error: selectError(),
+  idToken: selectIdToken(),
+  isLoggingIn: selectIsLoggingIn(),
+  profile: selectProfile(),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

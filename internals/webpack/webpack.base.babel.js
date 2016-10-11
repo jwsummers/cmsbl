@@ -56,7 +56,22 @@ module.exports = (options) => ({
       loader: 'url-loader?limit=10000',
     }],
   },
+  externals: {
+    fs: '{}',
+    net: '{}',
+  },
   plugins: options.plugins.concat([
+    function () {
+      this.plugin('done', (stats) => {
+        if (stats.compilation.errors && stats.compilation.errors.length) {
+          console.log('Found following error(s):');
+          stats.compilation.errors.forEach((theError) => {
+            console.log(theError);
+          });
+          process.exit(1);
+        }
+      });
+    },
     new webpack.ProvidePlugin({
       // make fetch available
       fetch: 'exports?self.fetch!whatwg-fetch',
@@ -66,10 +81,8 @@ module.exports = (options) => ({
     // inside your code for any environment checks; UglifyJS will automatically
     // drop any unreachable code.
     new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-        GIT_COMMIT_SHA: JSON.stringify(process.env.GIT_COMMIT_SHA),
-      },
+      ENVIRONMENT: JSON.stringify(process.env.NODE_ENV),
+      GIT_COMMIT_SHA: JSON.stringify(process.env.GIT_COMMIT_SHA),
     }),
   ]),
   postcss: () => [
