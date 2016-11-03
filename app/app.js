@@ -23,16 +23,22 @@ import LanguageProvider from 'containers/LanguageProvider';
 import configureStore from './store';
 import Raven from 'raven-js';
 
-Raven.config('https://b89f850f0edc4d829598619dee7c8d89@sentry.io/64272', {
-  release: GIT_COMMIT_SHA || 'development',
-  environment: ENVIRONMENT || 'development',
-}).install();
+if (ENVIRONMENT !== 'development') {
+  Raven.config('https://b89f850f0edc4d829598619dee7c8d89@sentry.io/64272', {
+    release: GIT_COMMIT_SHA || 'development',
+    environment: ENVIRONMENT || 'development',
+  }).install();
+}
 
 // Import i18n messages
 import { translationMessages } from './i18n';
 
 // Import the CSS reset, which HtmlWebpackPlugin transfers to the build folder
 import 'sanitize.css/sanitize.css';
+import 'react-mdl/extra/material.css';
+import './theme/theme.css';
+
+import 'react-mdl/extra/material.js';
 
 // Create redux store with history
 // this uses the singleton browserHistory provided by react-router
