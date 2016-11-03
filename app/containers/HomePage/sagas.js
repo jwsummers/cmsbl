@@ -9,8 +9,6 @@ import { LOCATION_CHANGE } from 'react-router-redux';
 import { LOGIN_REQUEST } from 'containers/App/constants';
 import { loginSuccess, loginFailure } from 'containers/App/actions';
 
-// import request from 'utils/request';
-
 /**
  * Github repos request/response handler
  */

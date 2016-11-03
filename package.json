@@ -84,31 +84,6 @@
       }
     }
   },
-  "stylelint": {
-    "extends": "stylelint-config-standard",
-    "rules": {
-      "color-hex-case": "upper",
-      "string-quotes": "single",
-      "font-family-name-quotes": "always-where-recommended",
-      "selector-pseudo-class-no-unknown": [
-        true,
-        {
-          "ignorePseudoClasses": [
-            "global"
-          ]
-        }
-      ],
-      "property-no-unknown": [
-        true,
-        {
-          "ignoreProperties": [
-            "composes"
-          ]
-        }
-      ],
-      "indentation": 2
-    }
-  },
   "dllPlugin": {
     "path": "node_modules/react-boilerplate-dlls",
     "exclude": [
@@ -145,12 +120,14 @@
     "react-dom": "^15.3.2",
     "react-helmet": "^3.1.0",
     "react-intl": "^2.1.5",
+    "react-mdl": "^1.7.2",
     "react-redux": "^4.4.5",
     "react-router": "^2.8.1",
     "react-router-redux": "^4.0.6",
     "react-router-scroll": "^0.3.2",
     "redux": "^3.6.0",
     "redux-immutable": "^3.0.8",
+    "redux-logger": "^2.7.0",
     "redux-saga": "^0.12.0",
     "reselect": "^2.5.4",
     "sanitize.css": "^4.1.0",

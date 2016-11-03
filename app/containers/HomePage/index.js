@@ -13,6 +13,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 
+import Button from 'react-mdl/lib/Button';
+
 import messages from './messages';
 import { createStructuredSelector } from 'reselect';
 
@@ -44,9 +46,9 @@ export class HomePage extends React.Component { // eslint-disable-line react/pre
         <p>
           {
             !this.props.idToken ?
-              <button onClick={this.props.login}>Login</button>
+              <Button onClick={this.props.login} raised colored ripple>Login</Button>
             :
-              <button onClick={this.props.logout}>Logout</button>
+              <Button onClick={this.props.logout}>Logout</Button>
           }
         </p>
         <ol>
