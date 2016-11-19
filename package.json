@@ -177,7 +177,7 @@
     "karma-coverage": "^1.1.1",
     "karma-firefox-launcher": "^1.0.0",
     "karma-ie-launcher": "^1.0.0",
-    "karma-jsdom-launcher": "^4.0.0",
+    "karma-jsdom-launcher": "^5.0.0",
     "karma-junit-reporter": "^1.1.0",
     "karma-mocha": "^1.2.0",
     "karma-mocha-reporter": "^2.2.0",
